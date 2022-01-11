@@ -1,0 +1,39 @@
+plugins {
+  id 'application'
+  id "com.github.ben-manes.versions" version "0.41.0"
+}
+
+repositories {
+  mavenCentral()
+}
+
+sourceCompatibility = '17'
+
+dependencies {
+  def javalinVersion = '4.2.0'
+  def elasticApmVersion = '1.28.4'
+  def elasticsearchVersion = '7.16.2'
+
+  // javalin
+  implementation "io.javalin:javalin:${javalinVersion}"
+  implementation 'org.slf4j:slf4j-simple:1.8.0-beta4'
+  implementation 'gg.jte:jte:1.12.1'
+  // elasticsearch
+  implementation "org.elasticsearch.client:elasticsearch-rest-client:${elasticsearchVersion}"
+  implementation "co.elastic.clients:elasticsearch-java:${elasticsearchVersion}"
+  // jackson for ES client + javalin serialization
+  implementation 'com.fasterxml.jackson.core:jackson-databind:2.12.4'
+  // APM
+  implementation "co.elastic.apm:apm-agent-attach:${elasticApmVersion}"
+  implementation "co.elastic.apm:apm-agent-api:${elasticApmVersion}"
+}
+
+task runHttpClient(type: JavaExec) {
+    classpath = sourceSets.main.runtimeClasspath
+    main = 'de.spinscale.ApmHttpClientExample'
+}
+
+task runWebserver(type: JavaExec) {
+    classpath = sourceSets.main.runtimeClasspath
+    main = 'de.spinscale.JavalinWebApplication'
+}

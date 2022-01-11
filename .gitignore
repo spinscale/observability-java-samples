@@ -1,0 +1,7 @@
+.gradle
+.idea
+**/.DS_Store
+build
+data
+out
+jte-classes
